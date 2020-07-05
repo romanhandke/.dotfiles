@@ -1,0 +1,10 @@
+[user]
+	email = handke@mehrkanal.com
+	name = Roman Handke
+[core]
+	editor = vim
+	excludesfile = ~/.gitignore
+[pager]
+	branch = false
+	show = bat
+	diff = bat
