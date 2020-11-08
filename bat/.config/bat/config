@@ -1,0 +1,4 @@
+--theme="Nord"
+--color="always"
+--style="numbers,changes,header"
+--map-syntax ".ignore:Git Ignore"

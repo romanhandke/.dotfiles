@@ -1,0 +1,9 @@
+[user]
+	email = roman.handke@online.de
+	name = Roman Handke
+[core]
+	editor = vim
+[pager]
+	branch = false
+	show = bat
+	diff = bat
