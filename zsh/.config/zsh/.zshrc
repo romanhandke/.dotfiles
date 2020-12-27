@@ -26,7 +26,7 @@ DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
 
 plugins=(git composer vi-mode zsh-syntax-highlighting tmux)
-ZSH_TMUX_AUTOSTART="true"
+# ZSH_TMUX_AUTOSTART="true"
 ZSH_TMUX_CONFIG="${HOME}/.config/tmux/tmux.conf"
 
 source $ZSH/oh-my-zsh.sh
