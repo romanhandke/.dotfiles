@@ -6,10 +6,17 @@ from typing import List  # noqa: F401
 import os
 import subprocess
 
+
 @hook.subscribe.startup_once
 def autostart():
     home = os.path.expanduser('~/.config/qtile/autostart.sh')
     subprocess.call(['sh', home])
+
+
+# @hook.subscribe.client_new
+# def client_new(client):
+#     if client.name == 'Firefox' or 'Google-Chrome-Stable':
+#         client.togroup('o')
 
 
 mod = "mod4"
@@ -37,20 +44,25 @@ keys = [
     Key([mod], "o", lazy.layout.maximize(), desc="Maximize"),
 
     # Dmenu
-    Key([mod], "r", lazy.spawn("dmenu_run -c -l 20 -fn 'MesloLSG FN'"), desc="Dmenu runner"),
-    Key([mod], "z", lazy.spawn("passmenu -c -l 20 -fn 'MesloLSG FN'"), desc="Passmenu"),
-    Key([mod], "c", lazy.spawn("clipmenu -c -l 20 -fn 'MesloLSG FN'"), desc="Clipmenu"),
+    Key([mod],
+        "r",
+        lazy.spawn("dmenu_run -c -l 20 -fn 'MesloLSG FN'"),
+        desc="Dmenu runner"),
+    Key([mod], "z", lazy.spawn(
+        "passmenu -c -l 20 -fn 'MesloLSG FN'"), desc="Passmenu"),
+    Key([mod], "c", lazy.spawn(
+        "clipmenu -c -l 20 -fn 'MesloLSG FN'"), desc="Clipmenu"),
 ]
 
 groups = [
-    Group(name = 'u', layout='monadtall', label = ''),
-    Group(name = 'i', layout='monadtall', label = ''),
-    Group(name = 'o', label = ''),
-    Group(name = 'p', label = ''),
-    Group(name = '7', label = ''),
-    Group(name = '8', label = ''),
-    Group(name = '9', label = ''),
-    Group(name = '0', label = ''),
+    Group(name='u', layout='monadtall', label=''),
+    Group(name='i', layout='monadtall', label=''),
+    Group(name='o', label=''),
+    Group(name='p', label=''),
+    Group(name='7', label=''),
+    Group(name='8', label=''),
+    Group(name='9', label=''),
+    Group(name='0', label=''),
 ]
 
 for i in groups:
@@ -58,8 +70,10 @@ for i in groups:
         # mod1 + letter of group = switch to group
         Key([mod], i.name, lazy.group[i.name].toscreen()),
 
-        # mod1 + shift + letter of group = switch to & move focused window to group
-        Key([mod, "shift"], i.name, lazy.window.togroup(i.name, switch_group=True)),
+        # mod1 + shift + letter of group = switch to & move focused window to
+        # group
+        Key([mod, "shift"], i.name, lazy.window.togroup(
+            i.name, switch_group=True)),
         # Or, use below if you prefer not to switch to that group.
         # # mod1 + shift + letter of group = move focused window to group
         # Key([mod, "shift"], i.name, lazy.window.togroup(i.name)),
@@ -68,14 +82,14 @@ for i in groups:
 layouts = [
     layout.Max(),
     layout.MonadTall(
-        border_width = 2,
-        border_focus = "81a1c1",
-        border_normal = "434c5e",
-        change_ratio = 0.05,
-        margin = 6,
-        max_ratio = 0.75,
-        min_ratio = 0.25,
-        ratio = 0.65,
+        border_width=2,
+        border_focus="81a1c1",
+        border_normal="434c5e",
+        change_ratio=0.05,
+        margin=6,
+        max_ratio=0.75,
+        min_ratio=0.25,
+        ratio=0.65,
     )
 ]
 
@@ -87,60 +101,63 @@ widget_defaults = {
 extension_defaults = widget_defaults.copy()
 
 colors = {
-    "fg_dark":"5e81ac",
+    "fg_dark": "5e81ac",
     "fg_light": "81a1c1",
-    "bg_dark":"5e81ac",
+    "bg_dark": "5e81ac",
     "bg_light": "81a1c1",
     "bg_bar": "2e3440",
     "white": "ffffff",
 }
 
 separator = widget.Sep(
-        linewidth = 2,
-        padding = 20,
-        )
+    linewidth=2,
+    padding=20,
+)
 
 screens = [
     Screen(
         top=bar.Bar(
             [
                 widget.GroupBox(
-                    active = colors['white'],
-                    inactive = colors['white'],
-                    block_highlight_text_color = colors['white'],
-                    highlight_method = 'line',
-                    highlight_color = colors['bg_dark'],
-                    padding = 20,
-                    rounded = True,
-                    spacing = 10,
+                    active=colors['white'],
+                    inactive=colors['white'],
+                    block_highlight_text_color=colors['white'],
+                    highlight_method='line',
+                    highlight_color=colors['bg_dark'],
+                    padding=20,
+                    rounded=True,
+                    spacing=10,
                 ),
                 separator,
-                widget.WindowName(foreground = colors['fg_light']),
+                widget.WindowName(foreground=colors['fg_light']),
                 widget.Systray(
-                    padding = 5,
+                    padding=5,
                 ),
                 separator,
 
                 # Cmus
-                widget.Cmus(play_color = "ffffff"),
-                widget.Volume(emoji = True),
+                widget.Cmus(play_color="ffffff"),
+                widget.Volume(emoji=True),
                 separator,
 
                 # Current Layout
                 widget.CurrentLayoutIcon(
-                    custom_icon_paths=[os.path.expanduser("~/.config/qtile/icons")],
+                    custom_icon_paths=[
+                        os.path.expanduser("~/.config/qtile/icons")],
                     scale=0.7,
                 ),
-                widget.CurrentLayout(foreground = colors['fg_light']),
+                widget.CurrentLayout(foreground=colors['fg_light']),
                 separator,
 
                 # Clock
-                widget.TextBox(text = '🕒'),
-                widget.Clock(format = '%a, %d %b - %H:%M', foreground = colors['fg_light']),
-                widget.Sep(linewidth = 0, padding = 10)
+                widget.TextBox(text='🕒'),
+                widget.Clock(
+                    format='%a, %d %b - %H:%M',
+                    foreground=colors['fg_light']),
+                widget.Sep(linewidth=0, padding=10)
             ],
             30,
-            background = colors['bg_bar']
+            background=colors['bg_bar']
         ),
     ),
 ]
